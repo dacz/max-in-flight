@@ -1,17 +1,19 @@
 {
   "name": "max-in-flight",
   "version": "0.0.0-development",
-  "description": "Limits how many async operations (promises) will be started concurrently",
+  "description":
+    "Limits how many async operations (promises) will be started concurrently",
   "main": "lib/index.js",
   "module": "index.js",
   "scripts": {
     "cm": "git-cz",
     "cm:retry": "git-cz --retry",
     "lint": "eslint ./index.js",
-    "test": "cross-env NODE_ENV=test nyc --require @std/esm ava",
+    "test": "cross-env NODE_ENV=test nyc ava",
     "test:watch": "cross-env NODE_ENV=test ava --watch -v",
     "clean": "rimraf lib coverage",
-    "build:commonjs": "cross-env BABEL_ENV=commonjs babel index.js --out-dir lib",
+    "build:commonjs":
+      "cross-env BABEL_ENV=commonjs babel index.js --out-dir lib",
     "build": "npm run clean && npm run build:commonjs",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "precommit": "npm run lint && npm test",
@@ -24,12 +26,8 @@
   "license": "MIT",
   "@std/esm": "cjs",
   "ava": {
-    "files": [
-      "index.test.js"
-    ],
-    "require": [
-      "@std/esm"
-    ]
+    "files": ["index.test.js"],
+    "require": ["@std/esm"]
   },
   "browserslist": "last 2 versions",
   "dependencies": {},
@@ -55,8 +53,5 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "files": [
-    "index.js",
-    "lib/"
-  ]
+  "files": ["index.js", "lib/"]
 }
