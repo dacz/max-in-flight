@@ -1,8 +1,7 @@
 {
   "name": "max-in-flight",
-  "version": "1.0.0",
-  "description":
-    "Limits how many async operations (promises) will be started concurrently",
+  "version": "0.0.0-development",
+  "description": "Limits how many async operations (promises) will be started concurrently",
   "main": "lib/index.js",
   "module": "index.js",
   "scripts": {
@@ -12,21 +11,25 @@
     "test": "cross-env NODE_ENV=test nyc --require @std/esm ava",
     "test:watch": "cross-env NODE_ENV=test ava --watch -v",
     "clean": "rimraf lib coverage",
-    "build:commonjs":
-      "cross-env BABEL_ENV=commonjs babel index.js --out-dir lib",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel index.js --out-dir lib",
     "build": "npm run clean && npm run build:commonjs",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "precommit": "npm run lint && npm test",
     "prepush": "npm run lint && npm test",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "travis-deploy-once": "travis-deploy-once"
   },
   "author": "DavidC., david@dchere.com",
   "repository": "https://github.com/dacz/max-in-flight",
   "license": "MIT",
   "@std/esm": "cjs",
   "ava": {
-    "files": ["index.test.js"],
-    "require": ["@std/esm"]
+    "files": [
+      "index.test.js"
+    ],
+    "require": [
+      "@std/esm"
+    ]
   },
   "browserslist": "last 2 versions",
   "dependencies": {},
@@ -44,12 +47,16 @@
     "eslint-config-dacz-node": "^2.0.3",
     "husky": "^0.14.3",
     "nyc": "^11.4.1",
-    "semantic-release": "^11.0.2"
+    "semantic-release": "^11.0.2",
+    "travis-deploy-once": "^4.3.0"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "files": ["index.js", "lib/"]
+  "files": [
+    "index.js",
+    "lib/"
+  ]
 }

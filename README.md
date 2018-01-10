@@ -18,7 +18,7 @@ npm install max-in-flight
 
 ## Motivation:
 
-I needed to call great amount of requests to http endpoint from different places of my server side app (graphql bridge with huge query running) and I needed to be sure that only X requests will be in flight otherwise the server will go down.
+I needed to call great amount of requests to http endpoint from different places of my server side app (graphql bridge with huge query running) and I needed to be sure that only XX requests will be in flight otherwise the server will go down.
 
 There are other solutions when you have existing array of async functions to call and you need to limit their processing (starting).
 
