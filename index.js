@@ -29,6 +29,12 @@
  *     'http://some.com', ... any other args for fetch ...);
  * }
  *
+ * alternatively you can use it to defer fn
+ *
+ * const deferFetch = maxInFlight(3).deferFn(fetch);
+ *
+ * const result = await deferFetch('http://some.com', ...);
+ *
  * Error is propagated to the defer so operation may fail
  * and will not take down other operations in flight
  * or any submitted in the future.
@@ -68,7 +74,10 @@ export default maxInFlight => {
     return prom;
   };
 
+  const deferFn = fn => (...allArgs) => deferCall(fn, ...allArgs);
+
   return {
     deferCall,
+    deferFn,
   };
 };

@@ -5,6 +5,7 @@ ssh
 npm-debug*
 .env*
 lib
+es
 .nyc_output/*
 
 ### Windows template

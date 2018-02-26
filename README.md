@@ -28,19 +28,17 @@ This was not the case, I needed kind of FIFO queue for such calls, because the r
 
 ```javascript
 import maxInFlight from 'maxInFlight';
-
-// constructor - limit number of max. concurrent async operation
-// and name the func
+// limit number of max. concurrent async operation
 const defer = maxInFlight(3).deferCall;
-
-// somewhere in our app (multiple places)
 async function() {
-  // ...
   const result = await defer(
     fetch,
-    'http://some.com', /* ... any other args for fetch ... */);
-  // ...
+    'http://some.com', ... any other args for fetch ...);
 }
+
+// alternatively you can use it to defer fn and use this defered fn then
+const deferFetch = maxInFlight(3).deferFn(fetch);
+const result = await deferFetch('http://some.com', ...);
 ```
 
 Error is propagated to the defer so operation may fail and will not take down other operations in flight or any submitted in the future.

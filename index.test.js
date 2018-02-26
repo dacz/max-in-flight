@@ -51,6 +51,21 @@ test('maxRequest', async t => {
   t.is(1000, rvSingle);
 });
 
+test('maxRequest - deferFn', async t => {
+  const deferRunner = maxRequests(3).deferFn(asyncRunner);
+  const arrP = [...Array(10).keys()].map(async i => [await deferRunner(i), i]);
+  const rv = await Promise.all(arrP);
+
+  // all called and resolved with the same value
+  rv.map(([j, k]) => t.is(j, k));
+  // all resolved ok
+  t.true(sameItems([...Array(10).keys()], rv.map(i => i[0])));
+
+  // and go on
+  const rvSingle = await deferRunner(1000);
+  t.is(1000, rvSingle);
+});
+
 test('maxRequest - some may fail', async t => {
   const defer = maxRequests(2).deferCall;
   // await in parallel
