@@ -51,21 +51,30 @@ export default maxInFlight => {
     typeof window !== undefined ? setTimeout(cb, 0) : process.nextTick(cb);
 
   const runQueue = _ => {
+    if (queue.length < 1) return true;
     if (currentInFlight < maxInFlight) {
       const next = queue.shift();
       if (next) {
         const [res, fn] = next;
         currentInFlight++;
-        res(fn());
+        return res(fn());
       }
+      return true;
     }
+    return true;
   };
 
   const callWrapper = (fn, ...args) => async _ => {
-    const rv = await fn(...args);
-    currentInFlight--;
-    nextTick(runQueue);
-    return rv;
+    try {
+      const rv = await fn(...args);
+      currentInFlight--;
+      nextTick(runQueue);
+      return rv;
+    } catch (e) {
+      currentInFlight--;
+      nextTick(runQueue);
+      return e;
+    }
   };
 
   const deferCall = (...allArgs) => {

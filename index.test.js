@@ -33,6 +33,11 @@ const asyncRunnerFails = async what =>
     )
   );
 
+const asyncRunnerFatal = async _ =>
+  new Promise(() => {
+    throw new Error('uh');
+  });
+
 test('maxRequest', async t => {
   const defer = maxRequests(3).deferCall;
   const arrP = [...Array(10).keys()].map(async i => [
@@ -76,11 +81,13 @@ test('maxRequest - some may fail', async t => {
     await defer(asyncRunner, 44),
     await defer(asyncRunner, 55),
     await defer(asyncRunner, 66),
+    await defer(asyncRunnerFatal),
   ];
   t.true(promArr[2] instanceof Error);
+  t.true(promArr[6] instanceof Error);
   t.is('oops-boom', promArr[2].message);
   t.deepEqual(promArr.slice(0, 2), [11, 22]);
-  t.deepEqual(promArr.slice(3), [44, 55, 66]);
+  t.deepEqual(promArr.slice(3, 6), [44, 55, 66]);
 });
 
 test('maxRequest - browser', async t => {
