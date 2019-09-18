@@ -48,7 +48,7 @@ export default maxInFlight => {
   // node/browser
   const nextTick = cb =>
     /* istanbul ignore next */
-    typeof window !== undefined ? setTimeout(cb, 0) : process.nextTick(cb);
+    typeof window !== 'undefined' ? setTimeout(cb, 0) : process.nextTick(cb);
 
   const runQueue = _ => {
     if (queue.length < 1) return true;
